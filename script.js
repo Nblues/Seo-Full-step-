@@ -1,5 +1,4 @@
-// ----- SHOPIFY + FIREBASE API CONFIG -----
-const SHOPIFY_DOMAIN = "kn-goodcar.com"; // แก้เป็นโดเมน Shopify จริง
+const SHOPIFY_DOMAIN = "kn-goodcar.com";
 const STOREFRONT_ACCESS_TOKEN = "bb70cb008199a94b83c98df0e45ada67";
 const FIREBASE_CONFIG = {
   apiKey: "xxxx",
@@ -17,11 +16,9 @@ let allCars = [];
 let filteredCars = [];
 let currentPage = 1;
 const carsPerPage = 8;
-
 const lineURL = "https://lin.ee/ng5yM32";
 const facebookURL = "https://www.facebook.com/KN2car.";
 
-// ----- SHOPIFY GRAPHQL -----
 const query = `
 {
   products(first: 100, sortKey: CREATED_AT, reverse: true) {
@@ -38,7 +35,6 @@ const query = `
   }
 }`;
 
-// ----- FETCH CAR DATA -----
 async function fetchCars() {
   try {
     const res = await fetch(`https://${SHOPIFY_DOMAIN}/api/2023-07/graphql.json`, {
@@ -50,7 +46,6 @@ async function fetchCars() {
       body: JSON.stringify({ query })
     });
     const result = await res.json();
-    // Map car data
     allCars = (result?.data?.products?.edges || []).map(({ node }) => ({
       id: node.handle,
       brand: node.title.split(" ")[0],
@@ -69,7 +64,6 @@ async function fetchCars() {
   }
 }
 
-// ----- FILTER -----
 function applyFilters() {
   const brand = document.getElementById('filter-brand').value.trim().toLowerCase();
   const keyword = document.getElementById('filter-keyword').value.trim().toLowerCase();
@@ -88,7 +82,6 @@ function applyFilters() {
   renderPagination();
 }
 
-// ----- RENDER CAR -----
 function renderCars() {
   const start = (currentPage - 1) * carsPerPage;
   const end = start + carsPerPage;
@@ -101,7 +94,7 @@ function renderCars() {
       <div class="car-price">฿${Number(car.price).toLocaleString()}</div>
       <div class="car-views"><span>👁</span> เข้าชม <span id="view-${car.id}">0</span> ครั้ง</div>
       <div class="car-actions">
-        <a class="detail-btn" href="car-detail.html?id=${car.id}" target="_blank">ดูรายละเอียด</a>
+        <a class="detail-btn" href="car-detail.html?handle=${car.id}" target="_blank">ดูรายละเอียด</a>
         <a class="line-btn" href="${lineURL}" target="_blank">LINE</a>
         <a class="facebook-btn" href="${facebookURL}" target="_blank">Facebook</a>
       </div>
@@ -111,7 +104,6 @@ function renderCars() {
   cars.forEach(car => updateViewCounter(car.id));
 }
 
-// ----- PAGINATION -----
 function renderPagination() {
   const total = Math.ceil(filteredCars.length / carsPerPage);
   let html = `<button class="page-btn" onclick="gotoPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>&larr;</button>`;
@@ -129,7 +121,6 @@ function gotoPage(page) {
   renderPagination();
 }
 
-// ----- VIEW COUNTER (Firebase) -----
 function updateViewCounter(carId) {
   const viewRef = db.ref('carViews/' + carId);
   viewRef.once('value').then(snap => {
