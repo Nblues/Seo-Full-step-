@@ -75,10 +75,8 @@
     <div>© 2025 ครูหนึ่งรถสวย รถมือสองเชียงใหม่</div>
   </footer>
   <script>
-    // -------------------- CONFIG --------------------
     const SHOPIFY_DOMAIN = "kn-goodcar.com";
     const STOREFRONT_ACCESS_TOKEN = "bb70cb008199a94b83c98df0e45ada67";
-    // ------------------- FUNCTION -------------------
     function getParam(name) {
       let p = new URLSearchParams(window.location.search); return p.get(name) || '';
     }
@@ -104,7 +102,6 @@
       const json = await res.json();
       return json.data.productByHandle;
     }
-    // -------------------- RENDER --------------------
     async function renderCarDetail() {
       const handle = getParam("handle");
       if(!handle) { document.getElementById('car-title').textContent = "ไม่พบข้อมูลรถ"; return;}
@@ -116,8 +113,6 @@
       document.getElementById('car-desc').textContent = car.description;
       document.getElementById('car-image').src = car.images.edges[0]?.node.url || "https://kn-goodcar.com/cover.jpg";
       document.getElementById('car-image').alt = car.title;
-
-      // --------- Dynamic SEO ---------
       document.title = car.title + " | ครูหนึ่งรถสวย รถมือสองเชียงใหม่";
       document.getElementById('seo-title').textContent = car.title + " | ครูหนึ่งรถสวย รถมือสองเชียงใหม่";
       document.getElementById('seo-desc').setAttribute('content', (car.description || "") + " ฟรีดาวน์ เชียงใหม่ รถมือสองราคาถูก รถบ้านคุณภาพดี เชียงใหม่");
@@ -129,7 +124,6 @@
       document.getElementById('tw-title').setAttribute('content', car.title + " | ครูหนึ่งรถสวย");
       document.getElementById('tw-desc').setAttribute('content', car.description);
       document.getElementById('tw-image').setAttribute('content', car.images.edges[0]?.node.url || "https://kn-goodcar.com/cover.jpg");
-      // --------- End Dynamic SEO ---------
     }
     renderCarDetail();
   </script>
