@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nblues.github.io/Seo-Full-step-/sitemap.xml
+Sitemap: https://chiangraiusedcar.com/sitemap.xml
