@@ -1,20 +1,138 @@
+body {
+  font-family: 'Sarabun', Arial, sans-serif;
+  background: #f9f9f9;
+  margin: 0;
+  padding: 0 0 32px 0;
+}
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 24px 0 16px 0;
+  font-weight: bold;
+}
+.breadcrumb {
+  margin: 0.5em auto 0.5em 1em;
+  font-size: 1em;
+}
+#filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 1em;
+}
+#filter-bar select, #filter-bar input, #filter-bar button {
+  font-size: 1em;
+  padding: 0.5em;
+  border-radius: 7px;
+  border: 1px solid #d6d6d6;
+}
+#filter-bar button {
+  background: #1791e2;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#filter-bar button:hover { background: #1059a6; }
 
-body { font-family: 'Prompt', Tahoma, Arial, sans-serif; background: #fafbfd; color: #232323; }
-h1 { font-size:2em; margin: 30px 0 24px 0; font-weight: bold; text-align:center; }
-.breadcrumb { margin:12px auto 16px auto; text-align:center; font-size:15px; color:#888; }
-.breadcrumb a { color:#2196f3; text-decoration:underline; }
-#filter-bar { display:flex;justify-content:center;gap:15px;align-items:center;flex-wrap:wrap;margin:20px 0; }
-#filter-bar select, #filter-bar input, #filter-bar button { font-size:16px; padding:10px 15px; border-radius:6px; border:1px solid #ccc; }
-#filter-bar button { background:#2196f3; color:#fff; border:none; cursor:pointer; }
-#product-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;padding:16px; }
-.product { background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.05);padding:0 0 14px 0; transition:.15s; display:flex; flex-direction:column;overflow:hidden; }
-.product img { width:100%; height:185px; object-fit:cover; border-radius:10px 10px 0 0;}
-.product h2 { font-size:20px;margin:10px 0 8px 0;color:#232323; }
-.product p { color:#555;font-size:15px; }
-.product .views { color:#888;font-size:14px;margin-top:10px; }
-.product a { display:block;background:#06c755;color:#fff;text-align:center;font-weight:bold;font-size:17px;padding:12px 0;border-radius:8px;margin:10px 18px 0 18px;text-decoration:none; }
-footer { margin:28px auto 0 auto;text-align:center; color:#888;font-size:15px;padding:18px 0 8px 0; }
-.internal-links a { color:#2196f3; margin:0 4px;text-decoration:underline; }
-#pagination { display:flex;justify-content:center;gap:7px;margin:18px 0; }
-#pagination button { background:#fff; border:1px solid #aaa; border-radius:7px; font-size:15px; padding:8px 15px; cursor:pointer; transition:.15s; }
-#pagination button[style*="background"] { background:#2196f3;color:#fff;font-weight:bold; }
+#product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 20px;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+
+.car-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 14px #0001;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow .15s;
+}
+.car-card:hover {
+  box-shadow: 0 4px 24px #0003;
+}
+
+.car-card img {
+  max-width: 95%;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  height: auto;
+  object-fit: cover;
+  box-shadow: 0 2px 8px #0002;
+}
+
+.car-info h2 {
+  margin: 0 0 6px 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #1e2329;
+}
+.car-price {
+  color: #dd1212;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 8px;
+}
+.car-desc {
+  font-size: 0.96em;
+  margin-bottom: 10px;
+  color: #333;
+  min-height: 46px;
+  line-height: 1.4;
+}
+.car-link {
+  display: inline-block;
+  background: #1791e2;
+  color: #fff;
+  border-radius: 6px;
+  padding: 6px 18px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.96em;
+  transition: background 0.15s;
+}
+.car-link:hover { background: #1059a6; }
+
+#pagination {
+  text-align: center;
+  margin: 1em 0 1.5em 0;
+}
+.page-btn {
+  background: #fff;
+  color: #1791e2;
+  border: 1px solid #1791e2;
+  border-radius: 7px;
+  margin: 0 4px;
+  padding: 5px 13px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all .15s;
+}
+.page-btn.active, .page-btn:hover {
+  background: #1791e2;
+  color: #fff;
+}
+
+footer {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 1em;
+  color: #666;
+}
+.internal-links {
+  margin-bottom: 6px;
+  color: #2d99de;
+}
+@media (max-width: 650px) {
+  h1 { font-size: 1.12rem; }
+  #product-list { grid-template-columns: 1fr; }
+  .car-card { padding: 10px; }
+}
