@@ -1,7 +1,6 @@
 // script.js
-// ตัวอย่างระบบโชว์รถ/ค้นหา/เลื่อนหน้า สำหรับเว็บรถมือสอง
 
-// ตัวอย่างข้อมูลรถ (สามารถเปลี่ยนเป็นดึงจาก Firebase หรือ API ได้)
+// ข้อมูลรถตัวอย่าง
 const cars = [
   {
     brand: "Toyota",
@@ -27,16 +26,15 @@ const cars = [
     img: "https://chiangraiusedcar.com/images/dmax.jpg",
     detail: "กระบะแต่งซิ่ง"
   }
-  // เพิ่มรถตามต้องการ
 ];
 
-// ฟังก์ชันแสดงรถ
+// แสดงรถ
 function renderCars(carList) {
   const el = document.getElementById("product-list");
   if (!el) return;
   el.innerHTML = carList.map(car => `
     <div class="car-card">
-      <img src="${car.img}" alt="${car.brand} ${car.model} ปี ${car.year}" loading="lazy">
+      <img src="${car.img}" alt="${car.brand} ${car.model} ปี ${car.year}" loading="lazy" style="width:100%;height:180px;object-fit:cover;">
       <div class="car-info">
         <div class="car-title">${car.brand} ${car.model} ${car.year}</div>
         <div class="car-price">฿${car.price.toLocaleString()}</div>
@@ -62,7 +60,7 @@ function applyFilters() {
   renderCars(filtered);
 }
 
-// Event สำหรับค้นหา
+// เริ่มต้น
 document.addEventListener("DOMContentLoaded", () => {
   renderCars(cars);
   document.getElementById("filter-brand").addEventListener("change", applyFilters);
