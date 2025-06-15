@@ -1,14 +1,9 @@
-// --- CONFIG (ตั้งค่า Shopify) ---
 const SHOPIFY_DOMAIN = "kn-goodcar.com";
 const STOREFRONT_ACCESS_TOKEN = "bb70cb008199a94b83c98df0e45ada67";
-const PRODUCTS_PER_PAGE = 6;
+const carsPerPage = 8;
+let currentPage = 1, cars = [], carsFiltered = [];
 
-// --- ดึงข้อมูลรถจาก Shopify ---
-let allProducts = [];
-let filteredProducts = [];
-let currentPage = 1;
-
-async function fetchProducts() {
+async function fetchCarsFromShopify() {
   const query = `
     {
       products(first: 100) {
@@ -18,8 +13,22 @@ async function fetchProducts() {
             title
             description
             handle
-            images(first: 1) { edges { node { url } } }
-            variants(first: 1) { edges { node { price { amount } } } }
+            images(first: 1) {
+              edges {
+                node {
+                  url
+                }
+              }
+            }
+            variants(first: 1) {
+              edges {
+                node {
+                  price {
+                    amount
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -29,71 +38,65 @@ async function fetchProducts() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token": STOREFRONT_ACCESS_TOKEN,
+      "X-Shopify-Storefront-Access-Token": STOREFRONT_ACCESS_TOKEN
     },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify({ query })
   });
   const json = await res.json();
-  allProducts = json.data.products.edges.map(edge => ({
-    title: edge.node.title,
-    description: edge.node.description,
-    handle: edge.node.handle,
-    image: edge.node.images.edges[0]?.node.url || "",
-    price: edge.node.variants.edges[0]?.node.price.amount || "",
+  cars = json.data.products.edges.map(({node}) => ({
+    name: node.title,
+    desc: node.description,
+    handle: node.handle,
+    image: node.images.edges[0]?.node.url || "",
+    price: node.variants.edges[0]?.node.price.amount || "-",
+    views: 0
   }));
-  filteredProducts = allProducts;
-  renderProducts();
-  renderPagination();
+  carsFiltered = cars;
+  goToPage(1);
 }
-
-// --- ฟังก์ชันแสดงรถ ---
-function renderProducts() {
-  const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
-  const end = start + PRODUCTS_PER_PAGE;
-  const items = filteredProducts.slice(start, end);
-  const html = items.map(car => `
-    <div class="car-card">
-      <img src="${car.image}" alt="${car.title}" loading="lazy" width="300">
-      <div class="car-info">
-        <h2>${car.title}</h2>
-        <div class="car-price">฿${parseInt(car.price).toLocaleString()}</div>
-        <p class="car-desc">${car.description}</p>
-        <a class="car-link" href="https://${SHOPIFY_DOMAIN}/products/${car.handle}" target="_blank" rel="nofollow">ดูรายละเอียด</a>
+function renderCars(carsToShow) {
+  const list = document.getElementById('product-list');
+  list.innerHTML = '';
+  carsToShow.forEach(car => {
+    list.innerHTML += `
+      <div class="card">
+        <img src="${car.image}" alt="${car.name}">
+        <div class="card-content">
+          <h2>${car.name}</h2>
+          <div class="price">฿${Number(car.price).toLocaleString()}</div>
+          <div class="view-count">👁️ เข้าชม ${car.views ?? 0} ครั้ง</div>
+          <button class="btn-detail" onclick="window.location='car-detail.html?handle=${car.handle}'">ดูรายละเอียด</button>
+        </div>
       </div>
-    </div>
-  `).join("");
-  document.getElementById("product-list").innerHTML = html || "<p style='text-align:center'>ไม่พบรถที่ค้นหา</p>";
+    `;
+  });
 }
-
-// --- Pagination ---
-function renderPagination() {
-  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
-  let html = "";
-  for (let i = 1; i <= totalPages; i++) {
-    html += `<button class="page-btn${i === currentPage ? " active" : ""}" onclick="goToPage(${i})">${i}</button>`;
+function renderPagination(totalCars) {
+  const pageCount = Math.ceil(totalCars / carsPerPage);
+  let html = '';
+  for (let i = 1; i <= pageCount; i++) {
+    html += `<button onclick="goToPage(${i})"${i === currentPage ? ' class="active"' : ''}>${i}</button>`;
   }
-  document.getElementById("pagination").innerHTML = html;
+  document.getElementById('pagination').innerHTML = html;
 }
-
 function goToPage(page) {
   currentPage = page;
-  renderProducts();
-  renderPagination();
+  const start = (page - 1) * carsPerPage;
+  const end = start + carsPerPage;
+  renderCars(carsFiltered.slice(start, end));
+  renderPagination(carsFiltered.length);
 }
-
-// --- Filter & Search ---
 function applyFilters() {
-  const brand = document.getElementById("filter-brand").value.toLowerCase();
-  const keyword = document.getElementById("filter-keyword").value.toLowerCase();
-  filteredProducts = allProducts.filter(car => {
-    const matchesBrand = !brand || car.title.toLowerCase().includes(brand);
-    const matchesKeyword = !keyword || car.title.toLowerCase().includes(keyword) || car.description.toLowerCase().includes(keyword);
-    return matchesBrand && matchesKeyword;
-  });
-  currentPage = 1;
-  renderProducts();
-  renderPagination();
+  const brand = document.getElementById('filter-brand').value.trim().toLowerCase();
+  const keyword = document.getElementById('filter-keyword').value.trim().toLowerCase();
+  carsFiltered = cars.filter(car =>
+    (brand === "" || car.name.toLowerCase().includes(brand)) &&
+    (keyword === "" ||
+      car.name.toLowerCase().includes(keyword) ||
+      car.desc.toLowerCase().includes(keyword) ||
+      car.price.toString().includes(keyword)
+    )
+  );
+  goToPage(1);
 }
-
-// --- เริ่มโหลดหน้าเว็บ ---
-window.onload = fetchProducts;
+window.onload = fetchCarsFromShopify;
