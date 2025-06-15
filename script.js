@@ -1,13 +1,14 @@
+// === ตั้งค่าต่าง ๆ ===
 const SHOPIFY_DOMAIN = "kn-goodcar.com";
 const STOREFRONT_ACCESS_TOKEN = "bb70cb008199a94b83c98df0e45ada67";
 const FIREBASE_CONFIG = {
-  apiKey: "xxxx",
-  authDomain: "xxxx",
+  apiKey: "AIzaSyBButqHaJHOrEg2Zi0uddwb6XI6_iCmnBs",
+  authDomain: "couddaw.firebaseapp.com",
   databaseURL: "https://couddaw-default-rtdb.firebaseio.com",
-  projectId: "xxxx",
-  storageBucket: "xxxx",
-  messagingSenderId: "xxxx",
-  appId: "xxxx"
+  projectId: "couddaw",
+  storageBucket: "couddaw.appspot.com",
+  messagingSenderId: "648914779023",
+  appId: "1:648914779023:web:f192ccd782caa50a6c69fa"
 };
 firebase.initializeApp(FIREBASE_CONFIG);
 const db = firebase.database();
@@ -17,7 +18,7 @@ let filteredCars = [];
 let currentPage = 1;
 const carsPerPage = 8;
 const lineURL = "https://lin.ee/ng5yM32";
-const facebookURL = "https://www.facebook.com/KN2car.";
+const facebookURL = "https://www.facebook.com/KN2car";
 
 const query = `
 {
@@ -94,7 +95,7 @@ function renderCars() {
       <div class="car-price">฿${Number(car.price).toLocaleString()}</div>
       <div class="car-views"><span>👁</span> เข้าชม <span id="view-${car.id}">0</span> ครั้ง</div>
       <div class="car-actions">
-        <a class="detail-btn" href="car-detail.html?handle=${car.id}" target="_blank">ดูรายละเอียด</a>
+        <a class="detail-btn" href="car-detail.html?handle=${car.id}" target="_blank" onclick="increaseView('${car.id}')">ดูรายละเอียด</a>
         <a class="line-btn" href="${lineURL}" target="_blank">LINE</a>
         <a class="facebook-btn" href="${facebookURL}" target="_blank">Facebook</a>
       </div>
@@ -121,6 +122,11 @@ function gotoPage(page) {
   renderPagination();
 }
 
+// ==== Firebase view counter ====
+async function increaseView(carId) {
+  const ref = db.ref('carViews/' + carId);
+  ref.transaction(current => (current || 0) + 1);
+}
 function updateViewCounter(carId) {
   const viewRef = db.ref('carViews/' + carId);
   viewRef.once('value').then(snap => {
