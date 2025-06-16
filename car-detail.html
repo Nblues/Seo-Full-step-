@@ -1,5 +1,43 @@
 <!DOCTYPE html>
-<html lang='th'>
-<head><meta charset='UTF-8'><title>รายละเอียดรถ</title></head>
-<body><h1>รายละเอียดรถแต่ละคัน</h1></body>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title id="seo-title">รายละเอียดรถมือสองเชียงใหม่ | ครูหนึ่งรถสวย</title>
+  <meta name="description" id="seo-desc" content="">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" id="seo-canonical" href="https://kn-goodcar.com/car-detail.html">
+  <meta property="og:title" id="og-title" content="">
+  <meta property="og:description" id="og-desc" content="">
+  <meta property="og:image" id="og-image" content="">
+  <meta property="og:url" id="og-url" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" id="tw-title" content="">
+  <meta name="twitter:description" id="tw-desc" content="">
+  <meta name="twitter:image" id="tw-image" content="">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <main>
+    <div class="car-card" style="max-width:480px; margin:32px auto;">
+      <img id="car-image" class="car-detail-image" src="" alt="">
+      <div class="car-content">
+        <div class="car-title" id="car-title"></div>
+        <div class="car-row">
+          <div class="car-price" id="car-price"></div>
+          <div class="car-views" id="car-views"></div>
+        </div>
+        <div id="car-updated" style="font-size:0.97rem; color:#757236; margin-bottom:4px"></div>
+        <div class="car-detail" id="car-desc"></div>
+        <div class="car-actions" style="margin-top:18px;">
+          <a class="line-btn" href="https://lin.ee/ng5yM32" target="_blank">LINE</a>
+          <a class="facebook-btn" href="https://www.facebook.com/KN2car" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
 </html>
