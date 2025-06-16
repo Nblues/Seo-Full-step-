@@ -1,1 +1,1 @@
-console.log('script loaded');
+console.log('โหลด script สำเร็จ');
