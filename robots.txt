@@ -1,3 +1,8 @@
-User-agent: *
-Allow: /
-Sitemap: https://kn-goodcar.com/sitemap.xml
+/index.html
+/all-cars.html
+/car-detail.html
+/style.css
+/script.js
+/robots.txt
+/sitemap.xml
+...
