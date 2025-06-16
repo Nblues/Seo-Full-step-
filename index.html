@@ -1,5 +1,117 @@
 <!DOCTYPE html>
-<html lang='th'>
-<head><meta charset='UTF-8'><title>หน้าแรก</title></head>
-<body><h1>หน้าแรก</h1></body>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ ผ่อนถูก | ครูหนึ่งรถสวย</title>
+  <meta name="description" content="รถมือสองเชียงใหม่ ครูหนึ่งรถสวย รวมรถบ้านเกรดเอ ฟรีดาวน์ ผ่อนถูก เช็ครถประวัติแท้ คัดเฉพาะรถสวย อัปเดตรถใหม่ทุกวัน...">
+  <meta name="keywords" content="รถมือสองเชียงใหม่, รถบ้านเชียงใหม่, รถฟรีดาวน์, รถมือสองราคาถูก, รถมือสองเกรดA">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://kn-goodcar.com/index.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ | ครูหนึ่งรถสวย">
+  <meta property="og:description" content="รถมือสองเชียงใหม่ ครูหนึ่งรถสวย รวมรถบ้านเกรดเอ ฟรีดาวน์ ผ่อนถูก...">
+  <meta property="og:image" content="https://kn-goodcar.com/cover.jpg">
+  <meta property="og:url" content="https://kn-goodcar.com/index.html">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ | ครูหนึ่งรถสวย">
+  <meta name="twitter:description" content="รถมือสองเชียงใหม่ ครูหนึ่งรถสวย รวมรถบ้านเกรดเอ ฟรีดาวน์ ผ่อนถูก...">
+  <meta name="twitter:image" content="https://kn-goodcar.com/cover.jpg">
+
+  <!-- JSON-LD: Organization + BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ครูหนึ่งรถสวย",
+    "url": "https://kn-goodcar.com/",
+    "logo": "https://kn-goodcar.com/logo.webp",
+    "sameAs": [
+      "https://www.facebook.com/KN2car",
+      "https://lin.ee/ng5yM32"
+    ],
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "telephone": "+66940649018",
+      "contactType": "customer service",
+      "areaServed": "TH",
+      "availableLanguage": ["Thai"]
+    }]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"หน้าแรก","item":"https://kn-goodcar.com/index.html"},
+      {"@type":"ListItem","position":2,"name":"รวมรถทั้งหมด","item":"https://kn-goodcar.com/all-cars.html"}
+    ]
+  }
+  </script>
+
+  <!-- Facebook Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0';
+    n.queue=[]; t=b.createElement(e); t.async=!0;
+    t.src=v; s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '939085106560508');
+    fbq('track', 'PageView');
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <!-- Main JS -->
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="custom-header">
+    <div class="header-container">
+      <img src="https://kn-goodcar.com/logo.webp" alt="โลโก้ครูหนึ่งรถสวย" class="logo-img">
+      <div>
+        <div class="header-title">โทร <a href="tel:0940649018">094-0649018</a></div>
+        <div class="header-sub">ครูหนึ่งรถสวย รถมือสองเชียงใหม่</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <h1>รถมือสองเชียงใหม่ รถบ้านอัปเดตล่าสุด ฟรีดาวน์ ผ่อนถูก</h1>
+
+    <!-- FILTER Bar -->
+    <div id="filter-bar">
+      <select id="filter-brand">
+        <option value="">ทุกยี่ห้อ</option>
+        <option value="Toyota">Toyota</option>
+        <!-- ...options -->
+      </select>
+      <input id="filter-keyword" type="text" placeholder="ค้นหา รุ่น, สี, ปี, ราคา...">
+      <button onclick="applyFilters()">ค้นหา</button>
+    </div>
+
+    <!-- PRODUCT LIST -->
+    <div id="product-list"></div>
+
+    <!-- PAGINATION -->
+    <div id="pagination"></div>
+  </main>
+
+  <!-- FOOTER (ตัดเมนูย่อยตามสั่ง) -->
+  <footer>
+    <div>© 2025 ครูหนึ่งรถสวย รถมือสองเชียงใหม่</div>
+  </footer>
+</body>
 </html>
