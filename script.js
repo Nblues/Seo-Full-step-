@@ -1,197 +1,156 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title id="seo-title">รายละเอียดรถมือสองเชียงใหม่ | ครูหนึ่งรถสวย</title>
-  <meta name="description" id="seo-desc" content="รถมือสองเชียงใหม่ ครูหนึ่งรถสวย รถบ้าน ฟรีดาวน์ ราคา...">
-  <meta name="robots" content="index, follow">
-  <meta name="keywords" content="รถมือสองเชียงใหม่, รถบ้านเชียงใหม่, รถฟรีดาวน์, รถมือสองฟรี...">
-  <link rel="canonical" id="seo-canonical" href="https://kn-goodcar.com/car-detail.html">
-  <!-- OG & Twitter -->
-  <meta property="og:title" id="og-title" content="รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ | ครูหนึ่งรถสวย">
-  <meta property="og:description" id="og-desc" content="รายละเอียดรถมือสองเชียงใหม่ รถบ้าน ฟรีดาวน์ ราคาถู...">
-  <meta property="og:image" id="og-image" content="https://kn-goodcar.com/cover.jpg">
-  <meta property="og:url" id="og-url" content="https://kn-goodcar.com/car-detail.html">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" id="tw-title" content="รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ | ครูหนึ่งรถสวย">
-  <meta name="twitter:description" id="tw-desc" content="รายละเอียดรถมือสองเชียงใหม่ รถบ้าน ฟรีดาวน์ ราคาถ...">
-  <meta name="twitter:image" id="tw-image" content="https://kn-goodcar.com/cover.jpg">
+// --- CONFIG ---
+const SHOPIFY_DOMAIN = "kn-goodcar.com";
+const STOREFRONT_ACCESS_TOKEN = "bb70cb008199a94b83c98df0e45ada67";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBButqHaJHOrEg2Zi0uddwb6XI6_iCmnBs",
+  authDomain: "couddaw.firebaseapp.com",
+  databaseURL: "https://couddaw-default-rtdb.firebaseio.com",
+  projectId: "couddaw",
+  storageBucket: "couddaw.appspot.com",
+  messagingSenderId: "648914779023",
+  appId: "1:648914779023:web:f192ccd782caa50a6c69fa"
+};
+firebase.initializeApp(FIREBASE_CONFIG);
+const db = firebase.database();
 
-  <!-- Breadcrumb Schema -->
-  <script type="application/ld+json" id="breadcrumb-json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "รถมือสองเชียงใหม่", "item": "https://kn-goodcar.com/all-cars" },
-      { "@type": "ListItem", "position": 2, "name": "รายละเอียดรถ", "item": "https://kn-goodcar.com/car-detail.html" }
-    ]
+let allCars = [];
+let filteredCars = [];
+let currentPage = 1;
+const carsPerPage = 8;
+const lineURL = "https://lin.ee/ng5yM32";
+const facebookURL = "https://www.facebook.com/KN2car";
+const query = `
+{
+  products(first: 100, sortKey: CREATED_AT, reverse: true) {
+    edges {
+      node {
+        id
+        title
+        description
+        handle
+        images(first: 1) { edges { node { url } } }
+        variants(first: 1) { edges { node { price { amount } } } }
+      }
+    }
   }
-  </script>
+}`;
 
-  <!-- Organization Schema -->
-  <script type="application/ld+json" id="org-json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "ครูหนึ่งรถสวย",
-    "url": "https://kn-goodcar.com/",
-    "logo": "https://kn-goodcar.com/logo.jpg",
-    "sameAs": [
-      "https://www.facebook.com/KN2car",
-      "https://lin.ee/ng5yM32"
-    ],
-    "contactPoint": [{
-      "@type": "ContactPoint",
-      "telephone": "+66940649018",
-      "contactType": "customer service",
-      "areaServed": "TH",
-      "availableLanguage": ["Thai"]
-    }]
+async function fetchCars() {
+  try {
+    const res = await fetch(`https://${SHOPIFY_DOMAIN}/api/2023-07/graphql.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": STOREFRONT_ACCESS_TOKEN
+      },
+      body: JSON.stringify({ query })
+    });
+    const result = await res.json();
+    allCars = (result?.data?.products?.edges || []).map(({ node }) => ({
+      id: node.handle,
+      brand: node.title.split(" ")[0],
+      model: node.title,
+      year: (node.title.match(/\d{4}/g) || [""]).pop(),
+      price: node.variants.edges[0]?.node.price?.amount || "ไม่ระบุ",
+      image: node.images.edges[0]?.node.url || "",
+      detail: node.description,
+      handle: node.handle
+    }));
+    filteredCars = [...allCars];
+    renderCars();
+    renderPagination();
+  } catch (err) {
+    document.getElementById('product-list').innerHTML = `<div style="color:#c00;text-align:center;">โหลดข้อมูลจาก Shopify ไม่สำเร็จ</div>`;
   }
-  </script>
+}
 
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: 'Kanit', sans-serif;
-      background: #fafafa;
-      color: #222;
-      margin: 0;
-    }
-    .car-detail-container { max-width:700px; margin:40px auto 24px auto; background:#fff; border-radius:20px; box-shadow:0 2px 16px #0002; overflow:hidden; }
-    .car-detail-image { width:100%; aspect-ratio:16/9; object-fit:cover; background:#eee; }
-    .car-detail-content { padding:24px 24px 12px 24px;}
-    .car-detail-title { font-size:1.45rem; margin-bottom:0.4em;}
-    .car-detail-desc { color:#444; font-size:1.08em; margin-bottom:1em;}
-    .car-detail-price { font-size:1.22em; color:#d32f2f; font-weight:bold; margin-bottom:0.5em;}
-    .car-detail-btn { background:#06c755; color:#fff; border:none; border-radius:8px; font-size:1.15em; width:100%; padding:14px 0; margin:18px 0 0 0; cursor:pointer;}
-    .car-detail-meta { color:#888; margin-bottom:8px; font-size:0.99em;}
-    .car-detail-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .line-btn, .facebook-btn {
-      background: #1877f2;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      padding: 12px 24px;
-      margin: 0 4px;
-      cursor: pointer;
-      text-decoration: none;
-      min-width: 120px;
-      text-align: center;
-      transition: background .15s;
-    }
-    .line-btn { background: #06c755; }
-    .line-btn:hover { background: #079c41; }
-    .facebook-btn:hover { background: #0e5ac6; }
-    @media (max-width:700px){.car-detail-container{margin:12px;}}
-  </style>
-</head>
-<body>
-  <main>
-    <div class="car-detail-container" id="car-detail">
-      <img class="car-detail-image" id="car-image" src="https://kn-goodcar.com/cover.jpg" alt="รถมือสองเชียงใหม่">
-      <div class="car-detail-content">
-        <div class="car-detail-title" id="car-title">รายละเอียดรถ...</div>
-        <div class="car-detail-price" id="car-price"></div>
-        <div class="car-detail-meta" id="car-meta"></div>
-        <div class="car-detail-desc" id="car-desc"></div>
-        <div class="car-detail-actions">
-          <a class="line-btn" href="https://lin.ee/ng5yM32" target="_blank">สอบถามผ่าน LINE</a>
-          <a class="facebook-btn" href="https://www.facebook.com/KN2car" target="_blank">Facebook</a>
-        </div>
+function applyFilters() {
+  const brand = document.getElementById('filter-brand').value.trim().toLowerCase();
+  const keyword = document.getElementById('filter-keyword').value.trim().toLowerCase();
+  filteredCars = allCars.filter(car => {
+    const matchBrand = !brand || (car.brand && car.brand.toLowerCase() === brand);
+    const matchKeyword = !keyword || (
+      (car.model && car.model.toLowerCase().includes(keyword)) ||
+      (car.year && car.year.toString().includes(keyword)) ||
+      (car.price && car.price.toString().includes(keyword)) ||
+      (car.detail && car.detail.toLowerCase().includes(keyword))
+    );
+    return matchBrand && matchKeyword;
+  });
+  currentPage = 1;
+  renderCars();
+  renderPagination();
+}
+
+function renderCars() {
+  const start = (currentPage - 1) * carsPerPage;
+  const end = start + carsPerPage;
+  const cars = filteredCars.slice(start, end);
+  const html = cars.map(car => `
+    <div class="car-card">
+      <img src="${car.image || 'no-image.jpg'}" alt="${car.model}" loading="lazy">
+      <div class="car-title">${car.model} ${car.year ? "ปี " + car.year : ""}</div>
+      <div class="car-detail">${car.detail || ''}</div>
+      <div class="car-bottom-bar">
+        <span class="car-price">฿${Number(car.price).toLocaleString()}</span>
+        <span class="car-views"><span>👁</span> <span id="view-${car.id}">0</span> ครั้ง</span>
       </div>
-    </div>
-  </main>
-  <script>
-    // === CONFIG ===
-    const SHOPIFY_DOMAIN = "kn-goodcar.com";
-    const STOREFRONT_ACCESS_TOKEN = "bb70cb008199a94b83c98df0e45ada67";
-    function getParam(name) {
-      let p = new URLSearchParams(window.location.search); return p.get(name) || '';
-    }
-    async function fetchCarDetail(handle) {
-      const query = `
-        { productByHandle(handle: "${handle}") {
-            title
-            description
-            images(first:3){ edges{ node{ url } } }
-            variants(first:1){ edges{ node{ price{ amount } } } }
-            updatedAt
-          }
-        }
-      `;
-      const res = await fetch(`https://${SHOPIFY_DOMAIN}/api/2023-10/graphql.json`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Shopify-Storefront-Access-Token": STOREFRONT_ACCESS_TOKEN
-        },
-        body: JSON.stringify({ query })
-      });
-      const json = await res.json();
-      return json.data.productByHandle;
-    }
-    async function renderCarDetail() {
-      const handle = getParam("handle");
-      if(!handle) { document.getElementById('car-title').textContent = "ไม่พบข้อมูลรถ"; return;}
-      const car = await fetchCarDetail(handle);
-      if(!car) { document.getElementById('car-title').textContent = "ไม่พบข้อมูลรถ"; return;}
-      document.getElementById('car-title').textContent = car.title;
-      document.getElementById('car-price').textContent = "฿" + Number(car.variants.edges[0]?.node.price.amount || "0").toLocaleString();
-      document.getElementById('car-meta').textContent = "อัปเดตล่าสุด: " + (car.updatedAt ? new Date(car.updatedAt).toLocaleDateString('th-TH') : "-");
-      document.getElementById('car-desc').textContent = car.description;
-      document.getElementById('car-image').src = car.images.edges[0]?.node.url || "https://kn-goodcar.com/cover.jpg";
-      document.getElementById('car-image').alt = car.title;
-
-      // ----------- Product Schema Dynamic ---------
-      const schemaProduct = {
+      <div class="car-actions">
+        <a class="detail-btn" href="car-detail.html?handle=${car.id}" target="_blank" onclick="increaseView('${car.id}')">ดูรายละเอียด</a>
+        <a class="line-btn" href="${lineURL}" target="_blank">LINE</a>
+        <a class="facebook-btn" href="${facebookURL}" target="_blank">Facebook</a>
+      </div>
+      <script type="application/ld+json">
+      ${JSON.stringify({
         "@context": "https://schema.org/",
         "@type": "Product",
-        "name": car.title,
-        "image": car.images.edges[0]?.node.url || "https://kn-goodcar.com/cover.jpg",
-        "description": car.description,
-        "brand": { "@type": "Brand", "name": car.title.split(" ")[0] },
+        "name": car.model,
+        "image": car.image,
+        "description": car.detail,
+        "brand": { "@type": "Brand", "name": car.brand },
         "offers": {
           "@type": "Offer",
           "priceCurrency": "THB",
-          "price": car.variants.edges[0]?.node.price.amount || "0",
+          "price": car.price,
           "availability": "https://schema.org/InStock"
         }
-      };
-      let el = document.getElementById('product-json');
-      if (!el) {
-        el = document.createElement('script');
-        el.type = 'application/ld+json';
-        el.id = 'product-json';
-        document.head.appendChild(el);
-      }
-      el.textContent = JSON.stringify(schemaProduct, null, 2);
+      })}
+      </script>
+    </div>
+  `).join('');
+  document.getElementById('product-list').innerHTML = html || '<div style="text-align:center;color:#d44;font-size:1.3em;">ไม่พบข้อมูลรถที่ค้นหา</div>';
+  cars.forEach(car => updateViewCounter(car.id));
+}
 
-      // --------- Dynamic SEO ---------
-      document.title = car.title + " | ครูหนึ่งรถสวย รถมือสองเชียงใหม่";
-      document.getElementById('seo-title').textContent = car.title + " | ครูหนึ่งรถสวย รถมือสองเชียงใหม่";
-      document.getElementById('seo-desc').setAttribute('content', (car.description || "") + " ฟรีดาวน์ เชียงใหม่ รถมือสองราคาถูก");
-      document.getElementById('seo-canonical').setAttribute('href', `https://kn-goodcar.com/car-detail.html?handle=${handle}`);
-      document.getElementById('og-title').setAttribute('content', car.title + " | ครูหนึ่งรถสวย");
-      document.getElementById('og-desc').setAttribute('content', car.description);
-      document.getElementById('og-image').setAttribute('content', car.images.edges[0]?.node.url || "https://kn-goodcar.com/cover.jpg");
-      document.getElementById('og-url').setAttribute('content', `https://kn-goodcar.com/car-detail.html?handle=${handle}`);
-      document.getElementById('tw-title').setAttribute('content', car.title + " | ครูหนึ่งรถสวย");
-      document.getElementById('tw-desc').setAttribute('content', car.description);
-      document.getElementById('tw-image').setAttribute('content', car.images.edges[0]?.node.url || "https://kn-goodcar.com/cover.jpg");
-      // --------- End Dynamic SEO ---------
-    }
-    renderCarDetail();
-  </script>
-</body>
-</html>
+function renderPagination() {
+  const total = Math.ceil(filteredCars.length / carsPerPage);
+  let html = `<button class="page-btn" onclick="gotoPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>&larr;</button>`;
+  for (let i = 1; i <= total; i++) {
+    html += `<button class="page-btn${i === currentPage ? ' active' : ''}" onclick="gotoPage(${i})">${i}</button>`;
+  }
+  html += `<button class="page-btn" onclick="gotoPage(${currentPage + 1})" ${currentPage === total ? 'disabled' : ''}>&rarr;</button>`;
+  document.getElementById('pagination').innerHTML = `<div class="pagination">${html}</div>`;
+}
+function gotoPage(page) {
+  const total = Math.ceil(filteredCars.length / carsPerPage);
+  if (page < 1 || page > total) return;
+  currentPage = page;
+  renderCars();
+  renderPagination();
+}
+
+// ==== Firebase view counter ====
+function increaseView(carId) {
+  const ref = db.ref('carViews/' + carId);
+  ref.transaction(current => (current || 0) + 1);
+}
+function updateViewCounter(carId) {
+  const viewRef = db.ref('carViews/' + carId);
+  viewRef.once('value').then(snap => {
+    const views = snap.val() || 0;
+    const el = document.getElementById('view-' + carId);
+    if (el) el.textContent = views;
+  });
+}
+
+window.onload = fetchCars;
