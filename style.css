@@ -114,16 +114,22 @@ h1 {
   align-items: center;
   gap: 6px;
 }
+
+/* ปรับปุ่มแนวตั้งแบบแฮมเบอร์เกอร์ (ใหม่) */
 .car-actions {
   text-align: center;
-  margin-top: 6px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .detail-btn, .line-btn, .facebook-btn {
-  display: inline-block;
-  padding: 10px 24px;
-  margin: 6px 4px 0 0;
-  border-radius: 9px;
-  font-size: 1.1rem;
+  display: block;
+  width: 100%;
+  padding: 13px 0;
+  margin: 0;
+  border-radius: 10px;
+  font-size: 1.13rem;
   border: none;
   font-weight: 600;
   cursor: pointer;
@@ -131,21 +137,16 @@ h1 {
   box-shadow: 0 1px 8px #f1f1f1;
   text-decoration: none;
 }
-.detail-btn {
-  background: #1da0ff;
-  color: #fff;
-}
+.detail-btn { background: #1da0ff; color: #fff; }
 .detail-btn:hover { background: #0276d1; }
-.line-btn {
-  background: #06c755;
-  color: #fff;
-}
+.line-btn { background: #06c755; color: #fff; }
 .line-btn:hover { background: #079c41; }
-.facebook-btn {
-  background: #1877f2;
-  color: #fff;
-}
+.facebook-btn { background: #1877f2; color: #fff; }
 .facebook-btn:hover { background: #0e5ac6; }
+@media (max-width:600px){
+  .car-actions { gap: 8px; }
+  .detail-btn, .line-btn, .facebook-btn { font-size: 1.05rem; }
+}
 .pagination {
   display: flex;
   gap: 12px;
