@@ -3,78 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>รวมรถมือสองเชียงใหม่ อัปเดตล่าสุด | ครูหนึ่งรถสวย</title>
-  <meta name="description" content="รวมรถมือสองเชียงใหม่ ฟรีดาวน์ ผ่อนถูก รถบ้านคุณภาพดี อัปเดตใหม่ทุกวัน พร้อมรับประกันทุกคัน">
+  <title>รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ ผ่อนถูก | ครูหนึ่งรถสวย</title>
+  <meta name="description" content="รถมือสองเชียงใหม่ ครูหนึ่งรถสวย รวมรถบ้านเกรดเอ ฟรีดาวน์ ผ่อนถูก เช็ครถประวัติแท้ คัดเฉพาะรถสวย อัปเดตรถใหม่ทุกวัน ซื้อขายแลกเปลี่ยนรถยนต์เชียงใหม่-ภาคเหนือ รับประกันทุกคัน">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://kn-goodcar.com/all-cars.html">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="รวมรถมือสองเชียงใหม่ อัปเดตล่าสุด | ครูหนึ่งรถสวย">
-  <meta property="og:description" content="รวมรถมือสองเชียงใหม่ ฟรีดาวน์ ผ่อนถูก รถบ้านคุณภาพดี อัปเดตใหม่ทุกวัน พร้อมรับประกันทุกคัน">
-  <meta property="og:image" content="https://kn-goodcar.com/cover.jpg">
-  <meta property="og:url" content="https://kn-goodcar.com/all-cars.html">
+  <link rel="canonical" href="https://chiangraiusedcar.com/all-cars" />
+  <meta property="og:title" content="รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ | ครูหนึ่งรถสวย">
+  <meta property="og:description" content="รวมรถมือสอง รถบ้านเชียงใหม่ ฟรีดาวน์ ผ่อนถูก รับประกัน อัปเดตรถใหม่ทุกวัน เช็กเครดิตออนไลน์ได้ทันที">
+  <meta property="og:image" content="https://chiangraiusedcar.com/cover.jpg">
+  <meta property="og:url" content="https://chiangraiusedcar.com/all-cars">
   <meta property="og:type" content="website">
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="รวมรถมือสองเชียงใหม่ อัปเดตล่าสุด | ครูหนึ่งรถสวย">
-  <meta name="twitter:description" content="รวมรถมือสองเชียงใหม่ ฟรีดาวน์ ผ่อนถูก รถบ้านคุณภาพดี อัปเดตใหม่ทุกวัน พร้อมรับประกันทุกคัน">
-  <meta name="twitter:image" content="https://kn-goodcar.com/cover.jpg">
-
-  <!-- JSON-LD: BreadcrumbList -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"BreadcrumbList",
-    "itemListElement":[
-      {"@type":"ListItem","position":1,"name":"หน้าแรก","item":"https://kn-goodcar.com/index.html"},
-      {"@type":"ListItem","position":2,"name":"รวมรถทั้งหมด","item":"https://kn-goodcar.com/all-cars.html"}
-    ]
-  }
-  </script>
-
+  <meta name="twitter:title" content="รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ | ครูหนึ่งรถสวย">
+  <meta name="twitter:description" content="รวมรถบ้านคุณภาพดี รถมือสองเชียงใหม่ ผ่อนถูก ฟรีดาวน์ เช็คเครดิตเร็ว">
+  <meta name="twitter:image" content="https://chiangraiusedcar.com/cover.jpg">
   <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script defer src="script.js"></script>
 </head>
 <body>
-  <header class="custom-header">
-    <div class="header-container">
-      <img src="https://kn-goodcar.com/logo.webp" alt="โลโก้ครูหนึ่งรถสวย" class="logo-img">
-      <div>
-        <div class="header-title">โทร <a href="tel:+66940649018">094-0649018</a></div>
-        <div class="header-sub">ครูหนึ่งรถสวย รถมือสองเชียงใหม่</div>
-      </div>
-    </div>
-  </header>
-
   <main>
-    <h1>รวมรถมือสองเชียงใหม่ อัปเดตล่าสุด</h1>
-
+    <h1>รถมือสองเชียงใหม่ รถบ้านอัปเดตล่าสุด ฟรีดาวน์ ผ่อนถูก</h1>
     <div id="filter-bar">
-      <select id="filter-brand">
+      <select id="filter-brand" aria-label="ค้นหารถตามยี่ห้อ">
         <option value="">ทุกยี่ห้อ</option>
         <option value="Toyota">Toyota</option>
-        <option value="Honda">Honda</option>
-        <option value="Isuzu">Isuzu</option>
         <option value="Nissan">Nissan</option>
-        <option value="Mazda">Mazda</option>
-        <option value="Ford">Ford</option>
         <option value="Mitsubishi">Mitsubishi</option>
+        <option value="Mercedes Benz">Mercedes Benz</option>
+        <option value="Honda">Honda</option>
+        <option value="Mazda">Mazda</option>
         <option value="Chevrolet">Chevrolet</option>
+        <option value="Ford">Ford</option>
         <option value="BMW">BMW</option>
+        <option value="KIA Carnival">KIA Carnival</option>
+        <option value="Isuzu">Isuzu</option>
       </select>
-      <input id="filter-keyword" type="text" placeholder="ค้นหา รุ่น, สี, ปี, ราคา...">
+      <input id="filter-keyword" type="text" placeholder="ค้นหา รุ่น, สี, ปี, ราคา..." aria-label="ค้นหารถรุ่นหรือคำสำคัญ">
       <button onclick="applyFilters()">ค้นหา</button>
     </div>
-
     <div id="product-list"></div>
     <div id="pagination"></div>
   </main>
-
-  <footer class="site-footer">
-    <div>© 2025 ครูหนึ่งรถสวย รถมือสองเชียงใหม่</div>
-  </footer>
+  <script src="script.js"></script>
 </body>
 </html>
