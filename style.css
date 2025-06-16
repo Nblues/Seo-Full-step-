@@ -4,9 +4,8 @@ body {
   color: #222;
   margin: 0;
 }
-
 #filter-bar {
-  margin: 20px auto 12px;
+  margin: 18px auto 10px;
   display: flex;
   gap: 10px;
   max-width: 540px;
@@ -39,7 +38,7 @@ h1 {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 1px 8px #e0e0e0;
-  margin: 24px auto;
+  margin: 16px auto 0 auto;
   padding: 18px;
   max-width: 640px;
   text-align: left;
@@ -77,8 +76,6 @@ h1 {
   align-items: center;
   gap: 6px;
 }
-
-/* ปุ่มแฮมเบอร์เกอร์แนวตั้ง */
 .car-actions {
   text-align: center;
   margin-top: 12px;
@@ -106,16 +103,12 @@ h1 {
 .line-btn:hover { background: #079c41; }
 .facebook-btn { background: #1877f2; color: #fff; }
 .facebook-btn:hover { background: #0e5ac6; }
-@media (max-width:600px){
-  .car-actions { gap: 8px; }
-  .detail-btn, .line-btn, .facebook-btn { font-size: 1.05rem; }
-}
 .pagination {
   display: flex;
   gap: 12px;
   justify-content: center;
   align-items: center;
-  margin: 32px 0;
+  margin: 14px 0 4px 0;
 }
 .page-btn {
   width: 50px;
