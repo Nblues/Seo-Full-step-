@@ -4,22 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title id="seo-title">รายละเอียดรถมือสองเชียงใหม่ | ครูหนึ่งรถสวย</title>
-  <meta name="description" id="seo-desc" content="รถมือสองเชียงใหม่ ครูหนึ่งรถสวย รถบ้าน ฟรีดาวน์ ราคาถูก ผ่อนสบาย รถสวย เชียงใหม่ รถบ้านแท้ รับประกันคุณภาพ">
+  <meta name="description" id="seo-desc" content="รถมือสองเชียงใหม่ ครูหนึ่งรถสวย รถบ้าน ฟรีดาวน์ ราคา...">
   <meta name="robots" content="index, follow">
-  <meta name="keywords" content="รถมือสองเชียงใหม่, รถบ้านเชียงใหม่, รถฟรีดาวน์, รถมือสองฟรีดาวน์, รถยนต์มือสอง, รถมือสองราคาถูก, รถบ้านเจ้าของขายเอง, เต็นท์รถเชียงใหม่, รถใช้แล้วเชียงใหม่, ซื้อขายรถมือสอง, รถมือสองเกรดA, รถบ้านฟรีดาวน์, รถมือสองเชียงราย">
+  <meta name="keywords" content="รถมือสองเชียงใหม่, รถบ้านเชียงใหม่, รถฟรีดาวน์, รถมือสองฟรี...">
   <link rel="canonical" id="seo-canonical" href="https://kn-goodcar.com/car-detail.html">
+  <!-- OG & Twitter -->
   <meta property="og:title" id="og-title" content="รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ | ครูหนึ่งรถสวย">
-  <meta property="og:description" id="og-desc" content="รายละเอียดรถมือสองเชียงใหม่ รถบ้าน ฟรีดาวน์ ราคาถูก รถสวยคุณภาพดี โดยครูหนึ่งรถสวย เชียงใหม่">
+  <meta property="og:description" id="og-desc" content="รายละเอียดรถมือสองเชียงใหม่ รถบ้าน ฟรีดาวน์ ราคาถู...">
   <meta property="og:image" id="og-image" content="https://kn-goodcar.com/cover.jpg">
   <meta property="og:url" id="og-url" content="https://kn-goodcar.com/car-detail.html">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" id="tw-title" content="รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ | ครูหนึ่งรถสวย">
-  <meta name="twitter:description" id="tw-desc" content="รายละเอียดรถมือสองเชียงใหม่ รถบ้าน ฟรีดาวน์ ราคาถูก รถสวยคุณภาพดี โดยครูหนึ่งรถสวย เชียงใหม่">
+  <meta name="twitter:description" id="tw-desc" content="รายละเอียดรถมือสองเชียงใหม่ รถบ้าน ฟรีดาวน์ ราคาถ...">
   <meta name="twitter:image" id="tw-image" content="https://kn-goodcar.com/cover.jpg">
 
-  <!-- Breadcrumb JSON-LD -->
-  <script type="application/ld+json">
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" id="breadcrumb-json">
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -29,8 +30,9 @@
     ]
   }
   </script>
-  <!-- Organization JSON-LD -->
-  <script type="application/ld+json">
+
+  <!-- Organization Schema -->
+  <script type="application/ld+json" id="org-json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -53,25 +55,43 @@
 
   <link rel="stylesheet" href="style.css">
   <style>
-    body { font-family: 'Kanit', sans-serif; background: #fafafa; color: #222; margin: 0; }
-    .car-detail-container { max-width: 700px; margin: 36px auto 24px auto; background: #fff; border-radius: 20px; box-shadow: 0 2px 16px #0002; overflow: hidden; }
-    .car-detail-image { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #eee; }
-    .car-detail-content { padding: 24px 24px 12px 24px; }
-    .car-detail-title { font-size: 1.45rem; margin-bottom: 0.4em; }
-    .car-detail-desc { color: #444; font-size: 1.08em; margin-bottom: 1em; }
-    .car-detail-price { font-size: 1.22em; color: #d32f2f; font-weight: bold; margin-bottom: 0.5em; }
-    .car-detail-meta { color: #888; margin-bottom: 8px; font-size: 0.99em; }
-    .car-detail-actions { display: flex; gap: 10px; margin-top: 16px; justify-content: center; flex-wrap: wrap; }
-    .back-btn, .line-btn, .facebook-btn {
-      background: #ececec; color: #444; border: none; border-radius: 8px; font-size: 1em; padding: 12px 24px;
-      margin: 0 4px 8px 0; cursor: pointer; text-decoration: none; min-width: 120px; text-align: center;
+    body {
+      font-family: 'Kanit', sans-serif;
+      background: #fafafa;
+      color: #222;
+      margin: 0;
+    }
+    .car-detail-container { max-width:700px; margin:40px auto 24px auto; background:#fff; border-radius:20px; box-shadow:0 2px 16px #0002; overflow:hidden; }
+    .car-detail-image { width:100%; aspect-ratio:16/9; object-fit:cover; background:#eee; }
+    .car-detail-content { padding:24px 24px 12px 24px;}
+    .car-detail-title { font-size:1.45rem; margin-bottom:0.4em;}
+    .car-detail-desc { color:#444; font-size:1.08em; margin-bottom:1em;}
+    .car-detail-price { font-size:1.22em; color:#d32f2f; font-weight:bold; margin-bottom:0.5em;}
+    .car-detail-btn { background:#06c755; color:#fff; border:none; border-radius:8px; font-size:1.15em; width:100%; padding:14px 0; margin:18px 0 0 0; cursor:pointer;}
+    .car-detail-meta { color:#888; margin-bottom:8px; font-size:0.99em;}
+    .car-detail-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .line-btn, .facebook-btn {
+      background: #1877f2;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      padding: 12px 24px;
+      margin: 0 4px;
+      cursor: pointer;
+      text-decoration: none;
+      min-width: 120px;
+      text-align: center;
       transition: background .15s;
     }
-    .back-btn { background: #e3e3e3; color: #444; }
-    .back-btn:hover { background: #ffb64d; color: #fff; }
-    .line-btn { background: #06c755; color: #fff; }
+    .line-btn { background: #06c755; }
     .line-btn:hover { background: #079c41; }
-    .facebook-btn { background: #1877f2; color: #fff; }
     .facebook-btn:hover { background: #0e5ac6; }
     @media (max-width:700px){.car-detail-container{margin:12px;}}
   </style>
@@ -86,7 +106,6 @@
         <div class="car-detail-meta" id="car-meta"></div>
         <div class="car-detail-desc" id="car-desc"></div>
         <div class="car-detail-actions">
-          <a class="back-btn" href="all-cars.html">&larr; กลับหน้ารวมรถ</a>
           <a class="line-btn" href="https://lin.ee/ng5yM32" target="_blank">สอบถามผ่าน LINE</a>
           <a class="facebook-btn" href="https://www.facebook.com/KN2car" target="_blank">Facebook</a>
         </div>
@@ -94,7 +113,7 @@
     </div>
   </main>
   <script>
-    // CONFIG
+    // === CONFIG ===
     const SHOPIFY_DOMAIN = "kn-goodcar.com";
     const STOREFRONT_ACCESS_TOKEN = "bb70cb008199a94b83c98df0e45ada67";
     function getParam(name) {
@@ -120,7 +139,6 @@
         body: JSON.stringify({ query })
       });
       const json = await res.json();
-      if (json.errors || !json.data?.productByHandle) return null;
       return json.data.productByHandle;
     }
     async function renderCarDetail() {
@@ -162,7 +180,7 @@
       // --------- Dynamic SEO ---------
       document.title = car.title + " | ครูหนึ่งรถสวย รถมือสองเชียงใหม่";
       document.getElementById('seo-title').textContent = car.title + " | ครูหนึ่งรถสวย รถมือสองเชียงใหม่";
-      document.getElementById('seo-desc').setAttribute('content', (car.description || "") + " ฟรีดาวน์ เชียงใหม่ รถมือสองราคาถูก รถบ้านคุณภาพดี เชียงใหม่");
+      document.getElementById('seo-desc').setAttribute('content', (car.description || "") + " ฟรีดาวน์ เชียงใหม่ รถมือสองราคาถูก");
       document.getElementById('seo-canonical').setAttribute('href', `https://kn-goodcar.com/car-detail.html?handle=${handle}`);
       document.getElementById('og-title').setAttribute('content', car.title + " | ครูหนึ่งรถสวย");
       document.getElementById('og-desc').setAttribute('content', car.description);
@@ -171,6 +189,7 @@
       document.getElementById('tw-title').setAttribute('content', car.title + " | ครูหนึ่งรถสวย");
       document.getElementById('tw-desc').setAttribute('content', car.description);
       document.getElementById('tw-image').setAttribute('content', car.images.edges[0]?.node.url || "https://kn-goodcar.com/cover.jpg");
+      // --------- End Dynamic SEO ---------
     }
     renderCarDetail();
   </script>
