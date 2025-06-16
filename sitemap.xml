@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
-  <url>
-    <loc>https://chiangraiusedcar.com/</loc>
-  </url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://kn-goodcar.com/index.html</loc></url>
+  <url><loc>https://kn-goodcar.com/all-cars.html</loc></url>
+  <!-- เพิ่ม car-detail.html?handle=... แต่ละคันแบบไดนามิก (auto-gen) -->
 </urlset>
