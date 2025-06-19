@@ -36,17 +36,6 @@ const query = `
   }
 }`;
 
-// ✅ โหลดรถหลัง login Firebase แล้วเท่านั้น
-window.onload = () => {
-  firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-      firebase.auth().signInAnonymously().catch(console.error);
-    } else {
-      fetchCars();
-    }
-  });
-};
-
 async function fetchCars() {
   try {
     const res = await fetch(`https://${SHOPIFY_DOMAIN}/api/2023-07/graphql.json`, {
@@ -79,8 +68,7 @@ async function fetchCars() {
 function applyFilters() {
   const brand = document.getElementById('filter-brand').value.trim().toLowerCase();
   const keyword = document.getElementById('filter-keyword').value.trim().toLowerCase();
-  filteredCars = [...allCars]; // reset ใหม่ทุกครั้ง
-  filteredCars = filteredCars.filter(car => {
+  filteredCars = allCars.filter(car => {
     const matchBrand = !brand || (car.brand && car.brand.toLowerCase() === brand);
     const matchKeyword = !keyword || (
       (car.model && car.model.toLowerCase().includes(keyword)) ||
@@ -101,7 +89,7 @@ function renderCars() {
   const cars = filteredCars.slice(start, end);
   const html = cars.map(car => `
     <div class="car-card">
-      <img src="${car.image || 'no-image.jpg'}" alt="${car.model}" loading="lazy">
+      <img src="${car.image}" alt="${car.model}" loading="lazy">
       <div class="car-title">${car.model} ${car.year ? "ปี " + car.year : ""}</div>
       <div class="car-detail">${car.detail || ''}</div>
       <div class="car-bottom-bar">
@@ -155,10 +143,9 @@ function gotoPage(page) {
 
 // ==== Firebase view counter ====
 function increaseView(carId) {
-  const ref = db.ref('views/' + carId);
+  const ref = db.ref('views/' + carId); // ✅ แก้ตรงนี้ให้ตรงกับ Firebase Rules
   ref.transaction(current => (current || 0) + 1);
 }
-
 function updateViewCounter(carId) {
   const viewRef = db.ref('views/' + carId);
   viewRef.once('value').then(snap => {
@@ -167,3 +154,5 @@ function updateViewCounter(carId) {
     if (el) el.textContent = views;
   });
 }
+
+window.onload = fetchCars;
