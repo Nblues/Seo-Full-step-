@@ -36,14 +36,16 @@ const query = `
   }
 }`;
 
-// ✅ โหลดรถหลัง login เท่านั้น
-firebase.auth().onAuthStateChanged(user => {
-  if (!user) {
-    firebase.auth().signInAnonymously().catch(console.error);
-  } else {
-    fetchCars();
-  }
-});
+// ✅ โหลดรถหลัง login Firebase แล้วเท่านั้น
+window.onload = () => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+      firebase.auth().signInAnonymously().catch(console.error);
+    } else {
+      fetchCars();
+    }
+  });
+};
 
 async function fetchCars() {
   try {
@@ -77,7 +79,8 @@ async function fetchCars() {
 function applyFilters() {
   const brand = document.getElementById('filter-brand').value.trim().toLowerCase();
   const keyword = document.getElementById('filter-keyword').value.trim().toLowerCase();
-  filteredCars = allCars.filter(car => {
+  filteredCars = [...allCars]; // reset ใหม่ทุกครั้ง
+  filteredCars = filteredCars.filter(car => {
     const matchBrand = !brand || (car.brand && car.brand.toLowerCase() === brand);
     const matchKeyword = !keyword || (
       (car.model && car.model.toLowerCase().includes(keyword)) ||
@@ -141,6 +144,7 @@ function renderPagination() {
   html += `<button class="page-btn" onclick="gotoPage(${currentPage + 1})" ${currentPage === total ? 'disabled' : ''}>&rarr;</button>`;
   document.getElementById('pagination').innerHTML = `<div class="pagination">${html}</div>`;
 }
+
 function gotoPage(page) {
   const total = Math.ceil(filteredCars.length / carsPerPage);
   if (page < 1 || page > total) return;
@@ -154,6 +158,7 @@ function increaseView(carId) {
   const ref = db.ref('views/' + carId);
   ref.transaction(current => (current || 0) + 1);
 }
+
 function updateViewCounter(carId) {
   const viewRef = db.ref('views/' + carId);
   viewRef.once('value').then(snap => {
