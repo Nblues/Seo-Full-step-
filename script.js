@@ -19,7 +19,6 @@ let currentPage = 1;
 const carsPerPage = 8;
 const lineURL = "https://lin.ee/ng5yM32";
 const facebookURL = "https://www.facebook.com/KN2car";
-
 const query = `
 {
   products(first: 100, sortKey: CREATED_AT, reverse: true) {
@@ -89,7 +88,7 @@ function renderCars() {
   const cars = filteredCars.slice(start, end);
   const html = cars.map(car => `
     <div class="car-card">
-      <img src="${car.image}" alt="${car.model}" loading="lazy">
+      <img src="${car.image || 'no-image.jpg'}" alt="${car.model}" loading="lazy">
       <div class="car-title">${car.model} ${car.year ? "ปี " + car.year : ""}</div>
       <div class="car-detail">${car.detail || ''}</div>
       <div class="car-bottom-bar">
@@ -132,7 +131,6 @@ function renderPagination() {
   html += `<button class="page-btn" onclick="gotoPage(${currentPage + 1})" ${currentPage === total ? 'disabled' : ''}>&rarr;</button>`;
   document.getElementById('pagination').innerHTML = `<div class="pagination">${html}</div>`;
 }
-
 function gotoPage(page) {
   const total = Math.ceil(filteredCars.length / carsPerPage);
   if (page < 1 || page > total) return;
@@ -143,11 +141,11 @@ function gotoPage(page) {
 
 // ==== Firebase view counter ====
 function increaseView(carId) {
-  const ref = db.ref('views/' + carId); // ✅ แก้ตรงนี้ให้ตรงกับ Firebase Rules
+  const ref = db.ref('carViews/' + carId);
   ref.transaction(current => (current || 0) + 1);
 }
 function updateViewCounter(carId) {
-  const viewRef = db.ref('views/' + carId);
+  const viewRef = db.ref('carViews/' + carId);
   viewRef.once('value').then(snap => {
     const views = snap.val() || 0;
     const el = document.getElementById('view-' + carId);
