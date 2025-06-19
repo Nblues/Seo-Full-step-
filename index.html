@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta name="google-site-verification" content="sL6uR8KyIOjUTNOIYGzy3lpSDOR0jxRSAqUoXtLzxCA" />
+  <meta name="google-site-verification" content="sL6uR8KyIOjUTNOIYGzy3lpSDOR0jxRSAqUoXtLzxCA" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ ผ่อนถูก | ครูหนึ่งรถสวย</title>
@@ -17,13 +17,18 @@
   <meta name="twitter:title" content="รถมือสองเชียงใหม่ รถบ้านฟรีดาวน์ | ครูหนึ่งรถสวย">
   <meta name="twitter:description" content="รวมรถบ้านคุณภาพดี รถมือสองเชียงใหม่ ผ่อนถูก ฟรีดาวน์ เช็คเครดิตเร็ว">
   <meta name="twitter:image" content="https://chiangraiusedcar.com/cover.jpg">
-  <link rel="stylesheet" href="style.css">
+
+  <!-- ✅ Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
     <h1>รถมือสองเชียงใหม่ รถบ้านอัปเดตล่าสุด ฟรีดาวน์ ผ่อนถูก</h1>
+
     <div id="filter-bar">
       <select id="filter-brand" aria-label="ค้นหารถตามยี่ห้อ">
         <option value="">ทุกยี่ห้อ</option>
@@ -42,9 +47,11 @@
       <input id="filter-keyword" type="text" placeholder="ค้นหา รุ่น, สี, ปี, ราคา..." aria-label="ค้นหารถรุ่นหรือคำสำคัญ">
       <button onclick="applyFilters()">ค้นหา</button>
     </div>
+
     <div id="product-list"></div>
     <div id="pagination"></div>
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
