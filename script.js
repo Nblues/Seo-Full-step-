@@ -19,6 +19,7 @@ let currentPage = 1;
 const carsPerPage = 8;
 const lineURL = "https://lin.ee/ng5yM32";
 const facebookURL = "https://www.facebook.com/KN2car";
+
 const query = `
 {
   products(first: 100, sortKey: CREATED_AT, reverse: true) {
@@ -34,6 +35,15 @@ const query = `
     }
   }
 }`;
+
+// ✅ โหลดรถหลัง login เท่านั้น
+firebase.auth().onAuthStateChanged(user => {
+  if (!user) {
+    firebase.auth().signInAnonymously().catch(console.error);
+  } else {
+    fetchCars();
+  }
+});
 
 async function fetchCars() {
   try {
@@ -141,16 +151,14 @@ function gotoPage(page) {
 
 // ==== Firebase view counter ====
 function increaseView(carId) {
-  const ref = db.ref('carViews/' + carId);
+  const ref = db.ref('views/' + carId);
   ref.transaction(current => (current || 0) + 1);
 }
 function updateViewCounter(carId) {
-  const viewRef = db.ref('carViews/' + carId);
+  const viewRef = db.ref('views/' + carId);
   viewRef.once('value').then(snap => {
     const views = snap.val() || 0;
     const el = document.getElementById('view-' + carId);
     if (el) el.textContent = views;
   });
 }
-
-window.onload = fetchCars;
